@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Playfair+Display:wght@400;700&display=swap');
+
+/*navbar*/
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+.navbar li {
+    float: left;
+  }
+
+.active {
+    background-color: #1e88cf;
+    color:white !important;
+    border-radius: 10px 10px 10px 10px;
+  }
+  
+.navbar li a {
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family: 'Montserrat';
+  }
+  
+.navbar a:hover {
+    background-color: #1e88cf;
+    color: white;
+    border-radius: 10px 10px 10px 10px;
+  }
+
+
+/*header*/
+.header h1 {
+    font-family: 'Playfair Display';
+    text-align: center;
+    font-size: 60px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.header h3 {
+    font-family: 'Playfair Display';
+    text-align: center;
+    font-weight: 400;
+    font-size: 35px;
+    margin-top: 0px;
+    color: #333;
+}
