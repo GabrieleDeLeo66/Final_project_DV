@@ -1,7 +1,7 @@
   function Map() {
       
   // The svg
-  var svg = d3.select("#map").append("svg")
+  var svg = d3.select("#map").append("svg").attr("id","main")
   width = +svg.attr("width"),
   height = +svg.attr("height");
 
@@ -23,18 +23,6 @@
   .domain([36,42])
   .range(["white","red"])
 
-  
-  var Tooltip = d3.select("#map")
-  .append("div")
-  .attr("class", "tooltip")
-  .style("opacity", 0)
-  .style("background-color", "white")
-  .style("border", "solid")
-  .style("border-width", "2px")
-  .style("border-radius", "5px")
-  .style("padding", "5px")
-
-
 
   // Load external data and boot
     d3.queue()
@@ -45,6 +33,7 @@
 
   // Draw the map
   function ready(error, topo) {
+
 
     var mouseMove = function(d) {
       Tooltip
@@ -63,6 +52,7 @@
           .duration(200)
           .style("opacity", 1)
           .style("stroke", "black")
+        
 
           Tooltip.style("opacity", 1)
       }
@@ -103,6 +93,16 @@
         .on("mouseover", mouseOver )
         .on("mouseleave", mouseLeave )
         .on("mousemove", mouseMove)
-        
+
+        var Tooltip = d3.selectAll(".Country")
+  .append("div")
+  .attr("class", "tooltip")
+  .style("opacity", 1)
+  .style("background-color", "black")
+  .style("border", "solid")
+  .style("border-width", "2px")
+  .style("border-radius", "5px")
+  .style("padding", "5px")
+
   }
 }
