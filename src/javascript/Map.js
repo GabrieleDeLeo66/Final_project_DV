@@ -36,8 +36,9 @@
 
 
     var mouseMove = function(d) {
+
       Tooltip
-        .html("ciao")
+        .html(d.iso_code + "<br>" + "New cases: " + d.new_cases )
         .style("left", (d3.mouse(this)[0]+10) + "px")
         .style("top", (d3.mouse(this)[1]) + "px")
     }
@@ -95,14 +96,14 @@
         .on("mousemove", mouseMove)
 
         var Tooltip = d3.selectAll(".Country")
-  .append("div")
-  .attr("class", "tooltip")
-  .style("opacity", 1)
-  .style("background-color", "black")
-  .style("border", "solid")
-  .style("border-width", "2px")
-  .style("border-radius", "5px")
-  .style("padding", "5px")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 1)
+        .style("background-color", "white")
+        .style("border", "solid")
+        .style("border-width", "2px")
+        .style("border-radius", "5px")
+        .style("padding", "5px")
 
   }
 }
