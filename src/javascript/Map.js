@@ -33,7 +33,7 @@
     d3.select('body')
     .append('div')
     .attr('id', 'tooltip')
-    .attr('style', 'position: absolute; opacity: 0;');
+    .attr('style', 'position: absolute; opacity: 0; width: 170px;background-color: #4C4949;color: #fff;text-align: center;padding: 5px 0;border-radius: 6px;font-family: Montserrat;');
 
 
 
@@ -41,19 +41,13 @@
   function ready(error, topo) {
 
     console.log(data)
-    var  mouseOver = function(d) {
-        d3.selectAll(".Country")
-          .transition()
-          .duration(200)
-          .style("opacity", .2)
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .style("opacity", 1)
 
-          d3.select('#tooltip').transition().duration(200).style('opacity', 1).text(d)
 
-      }
+    function arrotondaNumero(numero,nDecimali){
+        var numero_arrotondato = Math.round(numero*Math.pow(10,nDecimali))/Math.pow(10,nDecimali);
+        
+        return numero_arrotondato;
+         }
     
       var mouseLeave = function(d) {
         d3.selectAll(".Country")
@@ -65,7 +59,7 @@
           .duration(200)
           .style("stroke", "white")
 
-          d3.select('#tooltip').style('opacity', 0)
+          d3.select('#tooltip').transition().duration(200).style('opacity', 0)
       }
 
 
@@ -99,8 +93,8 @@
               .duration(200)
               .style("opacity", 1)
     
-              d3.select('#tooltip').transition().duration(200).style('opacity', 1).text(d.properties.geounit)
-    
+              d3.select('#tooltip').html((d.properties.geounit + "<br>New cases: " + d.total + "<br>Fever: " + arrotondaNumero(Math.log((d.total/1000)+1)+36.5, 1) + "&degC")).transition().duration(100).style('opacity', 1);
+              
           })
         .on("mouseleave", mouseLeave )
         .on('mousemove', function() {
