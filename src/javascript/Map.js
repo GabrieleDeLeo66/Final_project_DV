@@ -1,7 +1,7 @@
 function Map() {
   // The svg
   var svg = d3.select("#map").append("svg").attr("id", "main");
-  (width = +svg.attr("width")), (height = +svg.attr("height"));
+  (width = +svg.attr("width","1000px")), (height = +svg.attr("height","1000px"));
 
   // Map and projection
   var path = d3.geoPath();
@@ -23,6 +23,13 @@ function Map() {
       data.set(d.iso_code, +d.new_cases);
     })
     .await(ready);
+
+  d3.select("#map")
+    .append("input")
+    .attr("type","date")
+    .attr("id","date")
+    .attr("value","1997-01-07")
+    .attr("style","position:absolute;top:350px;left:50px;font-family:Montserrat;font-size:large;background-color:#4C4949;color:#fff;")
 
   d3.select("body")
     .append("div")
@@ -47,7 +54,7 @@ function Map() {
       d3.selectAll(".Country").transition().duration(200).style("opacity", 1);
       d3.select(this).transition().duration(200).style("stroke", "white");
 
-      d3.select("#tooltip").transition().duration(200).style("opacity", 0);
+      d3.select("#tooltip").transition().duration(100).style("opacity", 0);
     };
 
     // Draw the map
