@@ -23,13 +23,23 @@ function Map() {
   temperatures.forEach(function (item) {
     console.log(colorScale(item));
   });
-  console.log(colorScale(41.5));
+  console.log(colorScale(42));
+
+  json = {"main":[]}
 
   // Load external data and boot
   d3.queue()
     .defer(d3.json, "/src/asset/europe.geo.json")
     .defer(d3.csv, "/data/owid-covid-data-Europe.csv", function (d) {
-      data.set(d.iso_code, +d.new_cases);
+      element = {
+          "location": d.iso_code,
+          "new_cases": d.new_cases 
+      };
+      if (!data.get(d.date))
+        data.set(d.date, json);
+      tmp = data.get(d.date);
+      tmp.main.push(element);
+      data.set(d.date, tmp);
     })
     .await(ready);
 
@@ -40,7 +50,7 @@ function Map() {
     .attr("value", "1997-01-07")
     .attr(
       "style",
-      "position:absolute;top:350px;left:50px;font-family:Montserrat;font-size:large;background-color:#1e88cf;color:#fff;border-color:#333"
+      "position: absolute;top: 350px;left: 50px;font-family: Montserrat;font-size: large;background-color: #1e88cf;color: #fff;border-color: #333"
     );
 
   d3.select("body")
