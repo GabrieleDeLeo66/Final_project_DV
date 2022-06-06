@@ -25,21 +25,28 @@ function Map() {
   });
   console.log(colorScale(42));
 
-  json = {"main":[]}
+  
 
   // Load external data and boot
   d3.queue()
     .defer(d3.json, "/src/asset/europe.geo.json")
     .defer(d3.csv, "/data/owid-covid-data-Europe.csv", function (d) {
       element = {
+          "date": d.date,
           "location": d.iso_code,
           "new_cases": d.new_cases 
       };
-      if (!data.get(d.date))
+
+      json = {"main":[]}
+      if (!data.get(d.date)) {
+        json.main.push(element);
         data.set(d.date, json);
-      tmp = data.get(d.date);
-      tmp.main.push(element);
-      data.set(d.date, tmp);
+      }
+      else {
+        tmp = data.get(d.date);
+        tmp.main.push(element);
+        data.set(d.date, tmp);
+      }
     })
     .await(ready);
 
