@@ -25,19 +25,21 @@ function Map() {
   });
   console.log(colorScale(42));
 
-  
+
 
   // Load external data and boot
   d3.queue()
     .defer(d3.json, "/src/asset/europe.geo.json")
     .defer(d3.csv, "/data/owid-covid-data-Europe.csv", function (d) {
+
       element = {
-          "date": d.date,
-          "location": d.iso_code,
-          "new_cases": d.new_cases 
+        "date": d.date,
+        "location": d.iso_code,
+        "new_cases": d.new_cases
       };
 
-      json = {"main":[]}
+
+      json = { "main": [] }
       if (!data.get(d.date)) {
         json.main.push(element);
         data.set(d.date, json);
@@ -54,7 +56,7 @@ function Map() {
     .append("input")
     .attr("type", "date")
     .attr("id", "date")
-    .attr("value", "1997-01-07")
+    .attr("value", "2020-06-07")
     .attr(
       "style",
       "position: absolute;top: 350px;left: 50px;font-family: Montserrat;font-size: large;background-color: #1e88cf;color: #fff;border-color: #333"
@@ -81,7 +83,6 @@ function Map() {
 
     var mouseLeave = function (d) {
       d3.selectAll(".Country").transition().duration(200).style("opacity", 1);
-      d3.select(this).transition().duration(200).style("stroke", "white");
 
       d3.select("#tooltip").transition().duration(100).style("opacity", 0);
     };
@@ -95,10 +96,22 @@ function Map() {
       .append("path")
       // draw each country
       .attr("d", d3.geoPath().projection(projection))
-      .style("stroke", "#E2E2E2")
+      .style("stroke", "#ACABAB")
       // set the color of each country
       .attr("fill", function (d) {
-        d.total = data.get(d.properties.iso_a3) || 0;
+        json = data.get(document.getElementById("date").value);
+        console.log(document.getElementById("date").value)
+        json.main.forEach(function (item) {
+          if (d.properties.iso_a3 == -99) {
+            if (item.location == "OWID_KOS")
+              d.total = item.new_cases;
+          }
+          if (item.location == d.properties.iso_a3) {
+            d.total = item.new_cases;
+          }
+        });
+        if (isNaN(d.total))
+          return ("#d3d3d3");
         console.log(d.properties.geounit);
         var fever = Math.log(d.total / 1000 + 1) + 36.5;
         console.log(arrotondaNumero(fever, 1));
@@ -119,11 +132,11 @@ function Map() {
           d3.select("#tooltip")
             .html(
               d.properties.geounit +
-                "<br>New cases: " +
-                d.total +
-                "<br>Fever: " +
-                arrotondaNumero(Math.log(d.total / 1000 + 1) + 36.5, 1) +
-                "&degC"
+              "<br>New cases: " +
+              d.total +
+              "<br>Fever: " +
+              arrotondaNumero(Math.log(d.total / 1000 + 1) + 36.5, 1) +
+              "&degC"
             )
             .transition()
             .duration(100)
