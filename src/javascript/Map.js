@@ -56,7 +56,9 @@ function Map() {
     .append("input")
     .attr("type", "date")
     .attr("id", "date")
-    .attr("value", "2020-06-07")
+    .attr("value", "2022-02-17")
+    .attr("min", "2020-03-20")
+    .attr("max", "2022-02-17")
     .attr(
       "style",
       "position: absolute;top: 350px;left: 50px;font-family: Montserrat;font-size: large;background-color: #1e88cf;color: #fff;border-color: #333"
@@ -149,5 +151,33 @@ function Map() {
           .style("left", d3.event.pageX + 10 + "px")
           .style("top", d3.event.pageY + 10 + "px");
       });
+
+    function update() {
+      d3.selectAll("Path").attr("d", d3.geoPath().projection(projection)).attr("fill", function (d) {
+        json = data.get(document.getElementById("date").value);
+        console.log(document.getElementById("date").value)
+        json.main.forEach(function (item) {
+          if (d.properties.iso_a3 == -99) {
+            if (item.location == "OWID_KOS")
+              d.total = item.new_cases;
+          }
+          if (item.location == d.properties.iso_a3) {
+            d.total = item.new_cases;
+          }
+        });
+        if (isNaN(d.total))
+          return ("#d3d3d3");
+        console.log(d.properties.geounit);
+        var fever = Math.log(d.total / 1000 + 1) + 36.5;
+        console.log(arrotondaNumero(fever, 1));
+        return colorScale(arrotondaNumero(fever, 1));
+      })
+    }
+
+    // When a button change, I run the update function
+    d3.select("#date").on("change", update);
+
+    // And I initialize it at the beginning
+
   }
 }
