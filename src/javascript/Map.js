@@ -89,6 +89,31 @@ function Map() {
       d3.select("#tooltip").transition().duration(100).style("opacity", 0);
     };
 
+    d3.select("body")
+    .append("svg")
+    .attr("id", "legend")
+    .attr("width", "460px")
+    .attr("height", "15px")
+    .attr("style", "position: absolute;top: 350px;left:1350px");
+
+    var offset = 0
+    temperatures.forEach(function (item) { 
+      if (item < 42.25) {
+        d3.select("#legend")
+      .append("rect")
+      .attr("id", "temp"+item)
+      .attr("width", "20px")
+      .attr("height", "15px")
+      .attr("x", 0+offset + "px")
+      .attr("y", "0px")
+      .attr("fill", function(d) {
+        return colorScale(item);
+      })
+      offset += 20;
+      }
+    })
+
+
     // Draw the map
     svg
       .append("g")
@@ -98,7 +123,7 @@ function Map() {
       .append("path")
       // draw each country
       .attr("d", d3.geoPath().projection(projection))
-      .style("stroke", "#ACABAB")
+      .style("stroke", "#CCCCCC")
       // set the color of each country
       .attr("fill", function (d) {
         json = data.get(document.getElementById("date").value);
