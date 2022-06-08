@@ -89,12 +89,25 @@ function Map() {
       d3.select("#tooltip").transition().duration(100).style("opacity", 0);
     };
 
+
+    d3.select("body")
+    .append("img")
+    .attr("id","thermometer")
+    .attr("src","/src/asset/thermometer.png")
+    .attr("height","100px")
+    .attr("width","550px")
+    .attr("style", "position: absolute;top: 341px;left:1340px");
+
+    
+
+
+
     d3.select("body")
     .append("svg")
     .attr("id", "legend")
     .attr("width", "460px")
     .attr("height", "15px")
-    .attr("style", "position: absolute;top: 350px;left:1350px");
+    .attr("style", "position: absolute;top: 400px;left:1350px");
 
     var offset = 0
     temperatures.forEach(function (item) { 
