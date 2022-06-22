@@ -95,8 +95,8 @@ function Map() {
     .attr("id","thermometer")
     .attr("src","/src/asset/thermometer.png")
     .attr("height","100px")
-    .attr("width","550px")
-    .attr("style", "position: absolute;top: 341px;left:1340px");
+    .attr("width","600px")
+    .attr("style", "position: absolute;top: 341px;left:1240px");
 
     
 
@@ -107,7 +107,7 @@ function Map() {
     .attr("id", "legend")
     .attr("width", "460px")
     .attr("height", "15px")
-    .attr("style", "position: absolute;top: 400px;left:1350px");
+    .attr("style", "position: absolute;top: 400px;left:1293px");
 
     var offset = 0
     temperatures.forEach(function (item) { 
